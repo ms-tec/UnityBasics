@@ -18,22 +18,12 @@ public class PlayerController : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
     }
 
-    void OnTriggerEnter2D(Collider2D col) {
-        if(col.gameObject.tag == "NPC") {
-            Debug.Log("Met the NPC!");
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
         movement.x = horizontal;
         anim.SetFloat("moveX", horizontal);
-
-        float vertical = Input.GetAxis("Vertical");
-        movement.y = vertical;
-        anim.SetFloat("moveY", vertical);
     }
 
     void FixedUpdate()
