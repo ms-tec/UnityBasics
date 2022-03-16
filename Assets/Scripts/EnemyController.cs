@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private EnemyState state = EnemyState.Chasing;
-
     private Rigidbody2D body;
     private Animator anim;
 
@@ -44,18 +42,9 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch(state)
-        {
-            case EnemyState.Patrolling:
-                Patrol();
-                break;
-            case EnemyState.Chasing:
-                Chase();
-                break;
-            case EnemyState.Returning:
-                Return();
-                break;
-        }
+        // TODO: Write code that figures out which behavior function to call. Options
+        // are Patrol(), Chase(), and Return()
+        Patrol();
 
         // Update animation
         anim.SetFloat("moveX", Mathf.Sign(moveDirection.x));
@@ -78,26 +67,14 @@ public class EnemyController : MonoBehaviour
 
         MoveTowards(patrolPoints[patrolPointIndex]);
 
-        // State transition
-        if(((Vector2)player.transform.position - body.position).magnitude < minChasePlayerDistance)
-        {
-            state = EnemyState.Chasing;
-        }
+        // TODO: When to transition to a different statey, and how?
     }
 
     void Chase()
     {
         MoveTowards(player.transform.position);
 
-        // State transition
-        if((NearestPatrolPoint() - body.position).magnitude > maxChaseDistance)
-        {
-            state = EnemyState.Returning;
-        }
-        if (((Vector2)player.transform.position - body.position).magnitude > maxChasePlayerDistance)
-        {
-            state = EnemyState.Returning;
-        }
+        // TODO: When to transition to a different statey, and how?
     }
 
     void Return()
@@ -112,11 +89,7 @@ public class EnemyController : MonoBehaviour
         // Knowing where to return to, do so:
         MoveTowards(returnPoint);
 
-        // State transition
-        if((returnPoint - body.position).magnitude < 1)
-        {
-            state = EnemyState.Patrolling;
-        }
+        // TODO: When to transition to a different statey, and how?
     }
 
     void MoveTowards(Vector2 point)
@@ -140,12 +113,5 @@ public class EnemyController : MonoBehaviour
         }
 
         return nearest;
-    }
-
-    enum EnemyState
-    {
-        Patrolling,
-        Chasing,
-        Returning
     }
 }
