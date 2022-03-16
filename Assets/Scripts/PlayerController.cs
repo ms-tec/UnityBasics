@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -44,6 +45,23 @@ public class PlayerController : MonoBehaviour
     // Detect collision with trigger objects
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("The player has detected a collision!");
+        points++;
+        pointText.text = "Score: " + points;
+
+        Destroy(other.gameObject);
+
+        if(points == 3)
+        {
+            Debug.Log("You win!");
+            SceneManager.LoadScene("YouWin");
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "NPC")
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 }
